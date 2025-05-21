@@ -3,7 +3,7 @@
  * Plugin Name: Hot Random Image
  * Plugin URI: https://www.hotjoomlatemplates.com/wordpress-plugins/random-image
  * Description: Hot Random Image is a basic widget that shows a randomly picked image from a selected folder where images are stored.
- * Version: 1.9.2
+ * Version: 1.9.3
  * Author: Hot Themes
  * Author URI: https://www.hotjoomlatemplates.com
  * License: GPLv2 or later
@@ -56,18 +56,26 @@ add_shortcode( 'randomimage', 'randomimage_func' );
 
 function randomimage_select_image( $path, $link, $width, $height, $alt ) {
 
-	$images1 = glob($path.'/*.jpg');
-	$images2 = glob($path.'/*.png');
-	$images3 = glob($path.'/*.gif');
-	$images4 = glob($path.'/*.jpeg');
-	$images5 = glob($path.'/*.svg');
-	$images6 = glob($path.'/*.JPG');
-	$images7 = glob($path.'/*.PNG');
-	$images8 = glob($path.'/*.GIF');
-	$images9 = glob($path.'/*.JPEG');
-	$images10 = glob($path.'/*.SVG');
-	$images11 = glob($path.'/*.webp');
-    $images12 = glob($path.'/*.WEBP');
+	$realPath = realpath($path);
+
+	if (!$realPath || strpos($realPath, ABSPATH) !== 0 || !is_dir($realPath)) {
+	    return ''; // Invalid or unsafe path
+	}
+
+	$relativePath = str_replace(ABSPATH, '', $realPath);
+
+	$images1 = glob($relativePath.'/*.jpg');
+	$images2 = glob($relativePath.'/*.png');
+	$images3 = glob($relativePath.'/*.gif');
+	$images4 = glob($relativePath.'/*.jpeg');
+	$images5 = glob($relativePath.'/*.svg');
+	$images6 = glob($relativePath.'/*.JPG');
+	$images7 = glob($relativePath.'/*.PNG');
+	$images8 = glob($relativePath.'/*.GIF');
+	$images9 = glob($relativePath.'/*.JPEG');
+	$images10 = glob($relativePath.'/*.SVG');
+	$images11 = glob($relativePath.'/*.webp');
+    $images12 = glob($relativePath.'/*.WEBP');
 
 	$images = array();
 			
@@ -131,7 +139,7 @@ function randomimage_select_image( $path, $link, $width, $height, $alt ) {
 
 		$html .= '<figure class="wp-block-image">';
 		if($link){
-			$html .= '<a href="'.esc_attr($link).'">';
+			$html .= '<a href="'.esc_url($link).'">';
 		}
 			$html .= '<img class="hot-random-image" style="width:'.esc_attr($width).'; height:'.esc_attr($height).';" src="'.esc_url(get_site_url().'/'.$image).'" alt="'.esc_attr($image_alt).'" />';
 

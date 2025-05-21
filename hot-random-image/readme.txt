@@ -3,8 +3,8 @@ Contributors: hotwptemplates
 Donate link: https://www.hotjoomlatemplates.com/
 Tags: widget, block, image, images, responsive
 Requires at least: 3.9
-Tested up to: 6.6
-Stable tag: 1.9.2
+Tested up to: 6.8
+Stable tag: 1.9.3
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
